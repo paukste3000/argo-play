@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:bookworm
+        image: nginx:bullseye
         ports:
         - containerPort: 80
   minReadySeconds: 30
