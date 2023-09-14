@@ -34,10 +34,10 @@ spec:
   replicas: 5
   selector:
     matchLabels:
-      app: nginx-rollout
+      app: nginx
   spec:
       containers:
-        - name: nginx-rollout
+        - name: nginx
           image: nginx:alpine
           ports:
             - containerPort: 80
