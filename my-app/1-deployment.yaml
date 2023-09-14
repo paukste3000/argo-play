@@ -27,6 +27,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: example-rollout
+  namespace: prod
 spec:
   replicas: 10
   selector:
