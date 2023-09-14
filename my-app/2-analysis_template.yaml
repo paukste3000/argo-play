@@ -6,11 +6,11 @@ metadata:
   namespace: prod
 spec:
   args:
-  - name: service-name
   - name: stable-hash
   - name: latest-hash
   metrics:
   - name: success-rate
+    namespace: prod
     interval: 30s
     successCondition: result[0] >= 0.95
     failureLimit: 3
