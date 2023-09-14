@@ -18,9 +18,25 @@ spec:
       prometheus:
         address: http://prometheus.example.com:9090
         query: |
-          sum(irate(
-            istio_requests_total{reporter="source",destination_service=~"{{args.service-name}}",response_code!~"5.*"}[5m]
-          )) /
-          sum(irate(
-            istio_requests_total{reporter="source",destination_service=~"{{args.service-name}}"}[5m]
-          ))
+          100 *
+          (
+          sum by (rollout)(
+            label_replace(
+              rate(http_error_total{app="core",env="production",portal="fr",region="ams1", instance=~".*-{{args.latest-hash}}.*"}[2m]),
+            "rollout",
+            "$1",
+            "instance",
+            "core-int-unicorn-prod3-common-rollout-([a-zA-Z0-9]+)-(.*)"
+            )
+          )
+          /
+          sum by (rollout)(
+            label_replace(
+              rate(http_error_total{app="core",env="production",portal="fr",region="ams1", instance=~".*-{{args.latest-hash}}.*"}[2m]),
+              "rollout",
+              "$1",
+              "instance",
+              "core-int-unicorn-prod3-common-rollout-([a-zA-Z0-9]+)-(.*)"
+                  )
+              )
+          )
