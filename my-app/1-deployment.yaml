@@ -37,8 +37,8 @@ spec:
       app: nginx-rollout
   spec:
       containers:
-        - name: nginx
-          image: nginx:bookworm
+        - name: nginx-rollout
+          image: nginx:alpine
           ports:
             - containerPort: 80
   strategy:
