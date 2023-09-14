@@ -3,6 +3,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
   name: success-rate
+  namespace: prod
 spec:
   args:
   - name: service-name
