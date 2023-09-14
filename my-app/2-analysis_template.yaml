@@ -8,8 +8,41 @@ spec:
   args:
   - name: stable-hash
   - name: latest-hash
+  dryRun:
+    - metricName: error-rate
   metrics:
   - name: success-rate
+    namespace: prod
+    interval: 30s
+    successCondition: result[0] >= 0.95
+    failureLimit: 3
+    provider:
+      prometheus:
+        address: http://prometheus.example.com:9090
+        query: |
+          100 *
+          (
+          sum by (rollout)(
+            label_replace(
+              rate(http_error_total{app="core",env="production",portal="fr",region="ams1", instance=~".*-{{args.latest-hash}}.*"}[2m]),
+            "rollout",
+            "$1",
+            "instance",
+            "core-int-unicorn-prod3-common-rollout-([a-zA-Z0-9]+)-(.*)"
+            )
+          )
+          /
+          sum by (rollout)(
+            label_replace(
+              rate(http_error_total{app="core",env="production",portal="fr",region="ams1", instance=~".*-{{args.latest-hash}}.*"}[2m]),
+              "rollout",
+              "$1",
+              "instance",
+              "core-int-unicorn-prod3-common-rollout-([a-zA-Z0-9]+)-(.*)"
+                  )
+              )
+          )
+  - name: error-rate
     namespace: prod
     interval: 30s
     successCondition: result[0] >= 0.95
