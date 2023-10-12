@@ -21,14 +21,13 @@ spec:
   minReadySeconds: 30
   strategy:
     canary:
-      maxSurge: "10%"
       maxUnavailable: 0
       steps:
       - setWeight: 10
       - pause:
-          duration: 1m
+          duration: 15s
       - setWeight: 20
       - pause:
-          duration: 1m
+          duration: 15s
       - setWeight: 50
       - pause: {}
