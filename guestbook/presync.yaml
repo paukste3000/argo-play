@@ -16,7 +16,9 @@ spec:
           command: [sleep]
           args:
             [
-              "180"
+              "echo 'Sleeping'",
+              "60",
+              "echo 'Wakey wakey'"
             ]
       restartPolicy: Never
   backoffLimit: 1
