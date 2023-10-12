@@ -13,7 +13,7 @@ spec:
         - name: sleeper
           image: alpine
           imagePullPolicy: IfNotPresent
-          command: ["bin/bash"]
+          command: ["bash"]
           args:
             - '-c'
             - 'sleep 60'
