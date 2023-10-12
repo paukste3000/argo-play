@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: guestbook-presync-
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+        - name: sleeper
+          image: alpine
+          imagePullPolicy: IfNotPresent
+          command: [sleep]
+          args:
+            - "15"
+      restartPolicy: Never
+  backoffLimit: 1
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: guestbook-postsync-
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+        - name: sleeper
+          image: alpine
+          imagePullPolicy: IfNotPresent
+          command: [echo]
+          args:
+            [
+              "wakey wakey"
+            ]
+      restartPolicy: Never
+  backoffLimit: 1
