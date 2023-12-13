@@ -1,9 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
+strategy:
+    canary:
+      maxSurge: "25%"
+      maxUnavailable: 0
+      steps:
+      - setWeight: 10
+      - pause:
+          duration: 20s
+      - setWeight: 20
+      - pause: {}
 metadata:
   name: guestbook-ui
 spec:
-  replicas: 5
+  replicas: 10
   revisionHistoryLimit: 3
   selector:
     matchLabels:
