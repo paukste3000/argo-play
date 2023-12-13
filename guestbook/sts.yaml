@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: web
+  name: guestbook-sts
 spec:
   serviceName: "nginx"
   replicas: 2
@@ -21,4 +21,12 @@ spec:
           name: web
         volumeMounts:
         - name: www
-          mountPath: /usr/share/
+          mountPath: /usr/share
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 64Mi
