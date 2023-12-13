@@ -15,7 +15,7 @@ spec:
           imagePullPolicy: IfNotPresent
           command: [sleep]
           args:
-            - "15"
+            - "2"
       restartPolicy: Never
   backoffLimit: 1
 
