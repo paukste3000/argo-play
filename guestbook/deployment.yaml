@@ -13,7 +13,7 @@ spec:
           duration: 20s
       - setWeight: 20
       - pause: {}
-  replicas: 10
+  replicas: 5
   revisionHistoryLimit: 3
   selector:
     matchLabels:
